@@ -11,7 +11,7 @@ def option_2():
         file_name = file_name + ".csv"
 
     # Read the csv file and create a DF
-    ret_df = pd.DataFrame(pd.read_csv("RentasCiudad.csv", index_col=False))
+    ret_df = pd.DataFrame(pd.read_csv(file_name, index_col=False))
 
     # Convert DF columns into necessary format
     for column in ret_df.columns:
