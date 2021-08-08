@@ -17,30 +17,36 @@ def option_4():
     ret_df = pd.DataFrame(df[df["Origen"] == "Compras"])
     percep_df = pd.DataFrame(df[df["Origen"] == "Ventas"])
 
+    # Convert DF columns into necessary format
+    for column in ret_df.columns:
+        ret_df[column] = ret_df[column].astype(str)
+    for column in ret_df.columns:
+        percep_df[column] = percep_df[column].astype(str)
+    ret_df["Fecha ret/per"] = ret_df["Fecha ret/per"].apply(
+        lambda x: x.replace("/", "-"))
+
     # Build all the fields for txt
     round = 0
     while round <= 1:
         if round == 0:
-            date = ret_df["Fecha ret/per"].astype(
-                "string").str[:10].str.replace("/", "-")
+            date = ret_df["Fecha ret/per"].str[:10]
             bill_number = ret_df["Nro. de comprobante"].str[-9:]
             name = ret_df["Razon social"]
             id = ret_df["Nro. documento"]
-            amount = ret_df["Monto sujeto retención"].astype(str)
-            percentage = ret_df["Alicuota IB"].astype(str)
+            amount = ret_df["Monto sujeto retención"]
+            percentage = ret_df["Alicuota IB"]
             data = date + "," + bill_number + "," + name + \
                 ", ," + id + "," + amount + "," + percentage
             round += 1
         elif round == 1:
-            date = percep_df["Fecha ret/per"].astype(
-                "string").str[:10].str.replace("/", "-")
+            date = percep_df["Fecha ret/per"].str[:10]
             bill_type = percep_df["Tipo"].str[:2] + \
                 "_" + percep_df["Nro. de comprobante"].str[:1]
             bill_number = percep_df["Nro. de comprobante"].str[-9:]
             name = percep_df["Razon social"]
             id = percep_df["Nro. documento"]
-            amount = percep_df["Monto sujeto retención"].astype(str)
-            percentage = percep_df["Alicuota IB"].astype(str)
+            amount = percep_df["Monto sujeto retención"]
+            percentage = percep_df["Alicuota IB"]
             data = date + "," + bill_type + "," + bill_number + "," + name + \
                 "," + id + "," + amount + "," + percentage
             round += 1
