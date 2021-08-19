@@ -1,15 +1,12 @@
 import pandas as pd
+import os
+from PyQt6.QtWidgets import QFileDialog
+from elements import SuccessWindow
 
 # Option 2: Convert the csv file of perceptions from AGIP into a txt for importing to SIFERE
 
 
-def option_3():
-    print("")
-    file_name = input("Input the file name: ")
-    print("")
-    if file_name[-3:] != ".csv":
-        file_name = file_name + ".csv"
-
+def process_3(file_name):
     # Sometime thw downloaded file has a fisrt line that must be removed in order to the rest of the program work
     with open(file_name, 'r') as f:
         lines = f.readlines()
@@ -64,13 +61,13 @@ def option_3():
     txt = []
     for line in data:
         txt.append(line + "\n")
-    save_txt(txt)
 
-
-def save_txt(data):
-    file_name = input("\nInput the name to save the file: ")
-    if file_name[-4:] != ".txt":
-        file_name = file_name + ".txt"
-    with open(file_name, "w") as final_file:
-        final_file.writelines(data)
-    print("\nFile successfully saved")
+    # Save txt
+    desktop_path = os.path.join(os.path.join(
+        os.environ['USERPROFILE']), 'Desktop')
+    file_path = QFileDialog.getSaveFileName(
+        caption='Open file', directory=desktop_path, filter='*.txt')
+    with open(file_path[0], "w") as final_file:
+        final_file.writelines(txt)
+    success_window = SuccessWindow()
+    success_window.show()

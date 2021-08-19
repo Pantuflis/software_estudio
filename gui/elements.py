@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QGroupBox, QLabel, QPushButton, QWidget, QFileDialog, QGridLayout, QLineEdit, QProgressBar, QRadioButton, QVBoxLayout, QGroupBox
+from PyQt6.QtWidgets import QApplication, QGroupBox, QLabel, QMessageBox, QPushButton, QWidget, QFileDialog, QGridLayout, QLineEdit, QProgressBar, QRadioButton, QVBoxLayout, QGroupBox
 from PyQt6.QtGui import QPixmap
 from PyQt6 import QtGui, QtCore
 from PyQt6.QtGui import QCursor
@@ -16,7 +16,7 @@ class MainWindow(QWidget):
         super().__init__()
         self.setWindowTitle("Pantuflis Software")
         self.setFixedSize(500, 300)
-        self.setStyleSheet("background: '#3b444b';")
+        self.setStyleSheet('background: #3b444b;')
         # Change logo fir definitive
         self.setWindowIcon(QtGui.QIcon('logo.png'))
         self.global_layout = QVBoxLayout()
@@ -117,3 +117,81 @@ class Options(QRadioButton):
             margin: 0;
             padding: 0;"""
         )
+
+
+class ErrorWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Something went wrong")
+        self.setStyleSheet(
+            """background: #3b444b;
+            color: white;
+            font-size: 15px;"""
+        )
+        self.message_layout = QVBoxLayout()
+        self.btn_layout = QGridLayout()
+        self.setLayout(self.message_layout)
+        self.error = QLabel()
+        self.error.setText('Error')
+        self.error.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.ok_button = Button(text='OK', width=100,
+                                height=40, font_size='15')
+        # self.ok_button.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.message_layout.addWidget(self.error)
+        self.message_layout.addLayout(self.btn_layout)
+        self.btn_layout.addWidget(self.ok_button)
+        self.btn_layout.setContentsMargins(10, 20, 10, 10)
+        self.ok_button.clicked.connect(lambda: self.close())
+
+    def display_error(self, error=''):
+        self.error.setText(error)
+
+
+class SuccessWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Success!")
+        self.setStyleSheet(
+            """background: #3b444b;
+            color: white;
+            font-size: 15px;"""
+        )
+        self.message_layout = QVBoxLayout()
+        self.btn_layout = QGridLayout()
+        self.setLayout(self.message_layout)
+        self.error = QLabel()
+        self.error.setText('File successfully converted and saved')
+        self.error.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.ok_button = Button(text='OK', width=100,
+                                height=40, font_size='15')
+        # self.ok_button.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.message_layout.addWidget(self.error)
+        self.message_layout.addLayout(self.btn_layout)
+        self.btn_layout.addWidget(self.ok_button)
+        self.btn_layout.setContentsMargins(10, 20, 10, 10)
+        self.ok_button.clicked.connect(lambda: self.close())
+
+
+class InfoWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Important information")
+        self.setStyleSheet(
+            """background: #3b444b;
+            color: white;
+            font-size: 15px;"""
+        )
+        self.message_layout = QVBoxLayout()
+        self.btn_layout = QGridLayout()
+        self.setLayout(self.message_layout)
+        self.error = QLabel()
+        self.error.setText('Please select an option before browse your file')
+        self.error.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.ok_button = Button(text='OK', width=100,
+                                height=40, font_size='15')
+        # self.ok_button.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.message_layout.addWidget(self.error)
+        self.message_layout.addLayout(self.btn_layout)
+        self.btn_layout.addWidget(self.ok_button)
+        self.btn_layout.setContentsMargins(10, 20, 10, 10)
+        self.ok_button.clicked.connect(lambda: self.close())

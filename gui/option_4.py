@@ -1,16 +1,14 @@
 import pandas as pd
+import os
+from PyQt6.QtWidgets import QFileDialog
+from elements import SuccessWindow
 
 # Option 4: Convert a excel file from Misiones web into two txt files for import into Misisones web
 
 
-def option_4():
-    print("")
-    file_name = input("Input the file name: ")
-    print("")
-    if file_name[-4:] != ".xls" or file_name[-5:] != ".xlsx":
-        file_name = file_name + ".xlsx"
-
+def process_4(file_name):
     # Read file
+    print(file_name)
     df = pd.read_excel(file_name)
 
     # Create a df for retentions and perceptions
@@ -55,17 +53,23 @@ def option_4():
         txt = []
         for line in data:
             txt.append(line)
-        save_txt(txt, round)
 
-
-def save_txt(data, round):
-    if round == 1:
-        file_name = input('\nInput the name to save the "Retenciones" file: ')
-    elif round == 2:
-        file_name = input('\nInput the name to save the "Percepciones" file: ')
-    if file_name[-4:] != ".txt":
-        file_name = file_name + ".txt"
-    with open(file_name, "w") as final_file:
-        for i in range(len(data)):
-            final_file.writelines(data[i]+"\n")
-    print("\nFile successfully saved\n\n")
+        # Save txt
+        if round == 1:
+            desktop_path = os.path.join(os.path.join(
+                os.environ['USERPROFILE']), 'Desktop')
+            file_path = QFileDialog.getSaveFileName(
+                caption='Open file', directory=desktop_path, filter='*.txt')
+            success_window = SuccessWindow()
+            success_window.show()
+        elif round == 2:
+            desktop_path = os.path.join(os.path.join(
+                os.environ['USERPROFILE']), 'Desktop')
+            file_path = QFileDialog.getSaveFileName(
+                caption='Open file', directory=desktop_path, filter='*.txt')
+            success_window.show()
+        with open(file_path[0], "w") as final_file:
+            for i in range(len(txt)):
+                final_file.writelines(txt[i]+"\n")
+    success_window = SuccessWindow()
+    success_window.show()

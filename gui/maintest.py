@@ -21,7 +21,8 @@ widgets = {
 
 # Create window with black background
 app = QApplication(sys.argv)
-window = MainWindow()
+window = QWidget()
+grid = QGridLayout()
 
 
 def start_game():
@@ -61,7 +62,6 @@ def frame_1():
         file_name = QFileDialog.getOpenFileName(
             caption='Open File', directory=desktop_path, filter='*.txt *.xlsx')
         dir_path.setText(file_name[0])
-        dir_path.show()
 
     # Buttons
     ok_button = Button("OK")
@@ -77,11 +77,13 @@ def frame_1():
     bar = QProgressBar()
 
     # Grid
-    window.grid.addWidget(widgets['logo'][-1], 0, 0, 1, 2)
-    window.grid.addWidget(widgets['button'][-1], 1, 0)
-    window.grid.addWidget(cancel_button, 1, 1)
-    window.grid.addWidget(dir_path, 2, 0, 1, 2)
-    window.grid.addWidget(bar, 3, 0, 1, 2)
+    grid.addWidget(widgets['logo'][-1], 0, 0, 1, 2)
+    grid.addWidget(widgets['button'][-1], 1, 0)
+    grid.addWidget(cancel_button, 1, 1)
+    grid.addWidget(dir_path, 2, 0, 1, 2)
+    grid.addWidget(bar, 3, 0, 1, 2)
+
+    window.setLayout(grid)
 
 
 def frame_2():
@@ -90,7 +92,7 @@ def frame_2():
     score.setStyleSheet(
         """border: 1px solid 'green';
            border-radius: 35px;
-           background-color: 'green'; 
+           background-color: 'green';
            font-size: 35px;
            color: 'white';
            padding: 20px 15px;
@@ -119,13 +121,13 @@ def frame_2():
     widgets['answer3'].append(button3)
     widgets['answer4'].append(button4)
 
-    window.grid.addWidget(widgets['score'][-1], 0, 1)
-    window.grid.addWidget(widgets['question'][-1], 1, 0, 1, 2)
-    window.grid.addWidget(widgets['question'][-1], 1, 0, 1, 2)
-    window.grid.addWidget(widgets['answer1'][-1], 2, 0)
-    window.grid.addWidget(widgets['answer2'][-1], 2, 1)
-    window.grid.addWidget(widgets['answer3'][-1], 3, 0)
-    window.grid.addWidget(widgets['answer4'][-1], 3, 1)
+    grid.addWidget(widgets['score'][-1], 0, 1)
+    grid.addWidget(widgets['question'][-1], 1, 0, 1, 2)
+    grid.addWidget(widgets['question'][-1], 1, 0, 1, 2)
+    grid.addWidget(widgets['answer1'][-1], 2, 0)
+    grid.addWidget(widgets['answer2'][-1], 2, 1)
+    grid.addWidget(widgets['answer3'][-1], 3, 0)
+    grid.addWidget(widgets['answer4'][-1], 3, 1)
 
 
 if __name__ == "__main__":
