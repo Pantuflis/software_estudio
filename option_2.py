@@ -53,13 +53,4 @@ def process_2(file_name):
     txt = []
     for line in data:
         txt.append(line + "\n")
-
-    # Save txt
-    desktop_path = os.path.join(os.path.join(
-        os.environ['USERPROFILE']), 'Desktop')
-    file_path = QFileDialog.getSaveFileName(
-        caption='Open file', directory=desktop_path, filter='*.txt')
-    with open(file_path[0], "w") as final_file:
-        final_file.writelines(txt)
-    success_window = SuccessWindow()
-    success_window.show()
+    return txt

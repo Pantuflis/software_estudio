@@ -6,11 +6,6 @@ from PyQt6.QtGui import QCursor
 from PyQt6 import QtWidgets
 
 
-class App(QApplication):
-    def __init__(self):
-        super().__init__()
-
-
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
@@ -104,6 +99,7 @@ class ProgressBar(QProgressBar):
                 border-radius: 4px;
                 }"""
         )
+        self.setValue(0)
 
 
 class Options(QRadioButton):
@@ -164,7 +160,6 @@ class SuccessWindow(QWidget):
         self.error.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.ok_button = Button(text='OK', width=100,
                                 height=40, font_size='15')
-        # self.ok_button.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.message_layout.addWidget(self.error)
         self.message_layout.addLayout(self.btn_layout)
         self.btn_layout.addWidget(self.ok_button)
@@ -173,7 +168,7 @@ class SuccessWindow(QWidget):
 
 
 class InfoWindow(QWidget):
-    def __init__(self):
+    def __init__(self, text=''):
         super().__init__()
         self.setWindowTitle("Important information")
         self.setStyleSheet(
@@ -185,7 +180,7 @@ class InfoWindow(QWidget):
         self.btn_layout = QGridLayout()
         self.setLayout(self.message_layout)
         self.error = QLabel()
-        self.error.setText('Please select an option before browse your file')
+        self.error.setText(text)
         self.error.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.ok_button = Button(text='OK', width=100,
                                 height=40, font_size='15')
