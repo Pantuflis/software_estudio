@@ -7,6 +7,16 @@ from elements import SuccessWindow
 
 
 def process_2(file_name):
+    # Sometime thw downloaded file has a first line that must be removed in order to the rest of the program work
+    with open(file_name, 'r') as f:
+        lines = f.readlines()
+        if '=' in lines[0]:
+            lines.pop(0)
+
+    with open(file_name, 'w') as f:
+        for line in lines:
+            f.write(line)
+
     # Read the csv file and create a DF
     ret_df = pd.DataFrame(pd.read_csv(file_name, index_col=False))
 
@@ -29,7 +39,7 @@ def process_2(file_name):
     cuit = ret_df["CUIT"]
     date = ret_df["Fecha Comprobante"]
     succursal = ret_df["N° Ader"].str[-4:]
-    bill_number = ret_df["N° Comprobante"]
+    bill_number = ret_df["N° Comprobante"].str[-16:]
     bill_type = ret_df["Tipo Comprobante"]
     bill_letter = "A"
     certificate = ret_df["N° Certificado"]

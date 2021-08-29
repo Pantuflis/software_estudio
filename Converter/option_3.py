@@ -7,7 +7,7 @@ from elements import SuccessWindow
 
 
 def process_3(file_name):
-    # Sometime thw downloaded file has a fisrt line that must be removed in order to the rest of the program work
+    # Sometime thw downloaded file has a first line that must be removed in order to the rest of the program work
     with open(file_name, 'r') as f:
         lines = f.readlines()
         if '=' in lines[0]:
