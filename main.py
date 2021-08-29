@@ -1,6 +1,7 @@
 import time
 import os
 import sys
+from pandas.errors import ParserError
 from PyQt6.QtWidgets import QApplication
 from elements import MainWindow, BrowseBar, Button, ProgressBar, Options, QFileDialog, ErrorWindow, SuccessWindow, InfoWindow
 from option_1 import process_1
@@ -95,7 +96,7 @@ def convert_process(file_name):
                 data = process_2(file_name)
                 save_file(data)
                 browser_bar.setText('')
-            except KeyError as e:
+            except (KeyError, ParserError) as e:
                 error_window.display_error(
                     f'Missing column {str(e)}\n Please select a valid csv file')
                 error_window.show()
@@ -104,7 +105,7 @@ def convert_process(file_name):
                 data = process_3(file_name)
                 save_file(data)
                 browser_bar.setText('')
-            except KeyError as e:
+            except (KeyError, ParserError) as e:
                 error_window.display_error(
                     f'Missing column {str(e)}\n Please select a valid csv file')
                 error_window.show()
