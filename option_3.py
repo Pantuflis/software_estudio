@@ -36,7 +36,7 @@ def process_3(file_name):
     # Build the fields for txt
     jurisdiction = "90100"
     cuit = percep_df["CUIT"]
-    date = percep_df["Fecha Comprobante"]
+    date = percep_df["Fecha Percepcion"]
     succursal = percep_df["N° Ader"].str[-4:]
     bill_number = percep_df["N° Comprobante"].str[-8:]
     bill_type = percep_df["Tipo Comprobante"]
