@@ -5,7 +5,6 @@ from PyQt6 import QtGui, QtCore
 from PyQt6.QtGui import QCursor
 from PyQt6 import QtWidgets
 
-
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
@@ -42,7 +41,6 @@ class MainWindow(QWidget):
         self.process_layout.setContentsMargins(0, 15, 0, 10)
         self.process_layout.setSpacing(20)
         self.setLayout(self.global_layout)
-
 
 class BrowseBar(QLineEdit):
     def __init__(self):
@@ -189,4 +187,8 @@ class InfoWindow(QWidget):
         self.message_layout.addLayout(self.btn_layout)
         self.btn_layout.addWidget(self.ok_button)
         self.btn_layout.setContentsMargins(10, 20, 10, 10)
+        self.qr = self.frameGeometry()
+        self.center = QApplication.primaryScreen().availableGeometry().center()
+        self.qr.moveCenter(self.center)
+        self.move(self.qr.topLeft())
         self.ok_button.clicked.connect(lambda: self.close())

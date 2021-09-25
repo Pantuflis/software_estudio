@@ -35,7 +35,7 @@ def process_4_1(file_name):
     # Concatenate fields for txt
     txt = []
     for line in data:
-        txt.append(line)
+        txt.append(line + '\n')
     return txt
 
 
@@ -70,7 +70,7 @@ def process_4_2(file_name):
     # Concatenate fields for txt
     txt = []
     for line in data:
-        txt.append(line)
+        txt.append(line + '\n')
     return txt
 
     # Save txt

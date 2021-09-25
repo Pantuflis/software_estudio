@@ -26,18 +26,18 @@ def process_2(file_name):
 
     ret_df["N° Ader"] = ret_df["N° Ader"].apply(lambda x: "0" + str(x))
     ret_df["Tipo Comprobante"] = ret_df["Tipo Comprobante"].apply(
-        lambda x: x.replace("X", "O"))
+        lambda x: x.replace("X", "O").replace("L", "O").replace("R", "O"))
     ret_df["N° Comprobante"] = ret_df["N° Comprobante"].apply(
         lambda x: x.zfill(16).replace(" ", "0").replace("A", "0"))
     ret_df["N° Certificado"] = ret_df["N° Certificado"].apply(
-        lambda x: x.zfill(20))
+        lambda x: x.replace("-", "").replace("ORDD", "").zfill(20))
     ret_df["Monto Retenido"] = ret_df["Monto Retenido"].apply(
         lambda x: x.replace(".", ","))
 
     # Build the fields for txt
     jurisdiction = "90100"
     cuit = ret_df["CUIT"]
-    date = ret_df["Fecha Comprobante"]
+    date = ret_df["Fecha Retencion"]
     succursal = ret_df["N° Ader"].str[-4:]
     bill_number = ret_df["N° Comprobante"].str[-16:]
     bill_type = ret_df["Tipo Comprobante"]
@@ -51,7 +51,7 @@ def process_2(file_name):
         decimals.append(retention[i].split(","))
         for j in range(len(decimals)):
             if len(decimals[j][1]) < 2:
-                decimals[j][1] = "00"
+                decimals[j][1] = decimals[j][1] + "0"
     for i in range(len(decimals)):
         retention[i] = (",".join(decimals[i]).zfill(11))
 

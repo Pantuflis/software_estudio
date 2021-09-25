@@ -27,7 +27,7 @@ def process_3(file_name):
 
     percep_df["N° Ader"] = percep_df["N° Ader"].apply(lambda x: "0" + str(x))
     percep_df["Tipo Comprobante"] = percep_df["Tipo Comprobante"].apply(
-        lambda x: x.replace("X", "O"))
+        lambda x: x.replace("X", "O").replace("L", "O").replace("R", "O"))
     percep_df["N° Comprobante"] = percep_df["N° Comprobante"].apply(
         lambda x: x.zfill(8).replace(" ", "0").replace("A", "0"))
     percep_df["Monto Percibido"] = percep_df["Monto Percibido"].apply(
@@ -36,7 +36,7 @@ def process_3(file_name):
     # Build the fields for txt
     jurisdiction = "90100"
     cuit = percep_df["CUIT"]
-    date = percep_df["Fecha Comprobante"]
+    date = percep_df["Fecha Percepcion"]
     succursal = percep_df["N° Ader"].str[-4:]
     bill_number = percep_df["N° Comprobante"].str[-8:]
     bill_type = percep_df["Tipo Comprobante"]
@@ -49,7 +49,7 @@ def process_3(file_name):
         decimals.append(perception[i].split(","))
         for j in range(len(decimals)):
             if len(decimals[j][1]) < 2:
-                decimals[j][1] = "00"
+                decimals[j][1] = decimals[j][1] + "0"
     for i in range(len(decimals)):
         perception[i] = (",".join(decimals[i]).zfill(11))
 

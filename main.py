@@ -80,46 +80,74 @@ def filter():
         info_window.show()
 
 
+def convert_option_1(file_name):
+    try:
+        data = process_1(file_name)
+        save_file(data)
+        browser_bar.setText('')
+    except UnicodeDecodeError as e:
+        error_window.display_error(
+            f'{str(e)}\n Please select a valid txt file')
+        error_window.show()
+
+def convert_option_2(file_name):
+    try:
+        data = process_2(file_name)
+        save_file(data)
+        browser_bar.setText('')
+    except (KeyError, ParserError) as e:
+        error_window.display_error(
+            f'Missing column {str(e)}\n Please select a valid csv file')
+        error_window.show()
+
+def convert_option_3(file_name):
+    try:
+        data = process_3(file_name)
+        save_file(data)
+        browser_bar.setText('')
+    except (KeyError, ParserError) as e:
+        error_window.display_error(
+            f'Missing column {str(e)}\n Please select a valid csv file')
+        error_window.show()
+
+def convert_option_4(file_name):
+    try:
+        data = process_4_1(file_name)
+        save_file(data)
+        data = process_4_2(file_name)
+        save_file(data)
+        browser_bar.setText('')
+    except KeyError as e:
+        error_window.display_error(
+            f'Missing column {str(e)}\n Please select a valid xlsx file')
+        error_window.show()
+
+def show_open_file_error(e):
+    error_window.display_error(f'{str(e)}\nFile in use, please close it and retry')
+    error_window.show()
+
 def convert_process(file_name):
     try:
         if option_1.isChecked():
             try:
-                data = process_1(file_name)
-                save_file(data)
-                browser_bar.setText('')
-            except UnicodeDecodeError as e:
-                error_window.display_error(
-                    f'{str(e)}\n Please select a valid txt file')
-                error_window.show()
+                convert_option_1(file_name)
+            except OSError as e:
+                show_open_file_error(e)
         elif option_2.isChecked():
             try:
-                data = process_2(file_name)
-                save_file(data)
-                browser_bar.setText('')
-            except (KeyError, ParserError) as e:
-                error_window.display_error(
-                    f'Missing column {str(e)}\n Please select a valid csv file')
-                error_window.show()
+                convert_option_2(file_name)
+            except OSError as e:
+                show_open_file_error(e)
         elif option_3.isChecked():
             try:
-                data = process_3(file_name)
-                save_file(data)
-                browser_bar.setText('')
-            except (KeyError, ParserError) as e:
-                error_window.display_error(
-                    f'Missing column {str(e)}\n Please select a valid csv file')
-                error_window.show()
+                convert_option_3(file_name)
+            except OSError as e:
+                show_open_file_error(e)
         elif option_4.isChecked():
             try:
-                data = process_4_1(file_name)
-                save_file(data)
-                data = process_4_2(file_name)
-                save_file(data)
-                browser_bar.setText('')
-            except KeyError as e:
-                error_window.display_error(
-                    f'Missing column {str(e)}\n Please select a valid xlsx file')
-                error_window.show()
+                convert_option_4(file_name)
+            except OSError as e:
+                show_open_file_error(e)
         else:
             info_window = InfoWindow(
                 'Please select an option before convert your file')
